@@ -1,7 +1,7 @@
 {
   "name": "lokl",
   "version": "1.0.0",
-  "description": "",
+  "description": "A community networking board. A Code Nation project.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/kjkent/lokl.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Felicia Valentine, Kristopher James Kent, Pui Yan Leung",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kjkent/lokl/issues"
