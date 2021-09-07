@@ -1,13 +1,16 @@
 require("dotenv").config();
 const express = require("express");
+const app = express();
 
 const { connection } = require("./connections/db");
-const port = process.env.EXPRESS_PORT;
+const expressPort = process.env.EXPRESS_PORT;
+const tempRouter = require("./routes/temp");
 
-const app = express();
 app.use(express.json());
 
-app.listen(port, () => {
+app.use("*", tempRouter);
+
+app.listen(expressPort, () => {
     console.log(`Listening on port ${process.env.EXPRESS_PORT}`);
     connection.once("open", () => {
         console.log("Connected to Atlas");
