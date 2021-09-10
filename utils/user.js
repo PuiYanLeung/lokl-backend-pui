@@ -1,6 +1,6 @@
 const User = require("../models/user");
 
-exports.add = async (username, email, pwdHash) => await new User({username, email, pwdHash}).save();
+exports.new = async (username, email, pwdHash) => await new User({username, email, pwdHash}).save();
 
 exports.read = async (username) => await User.find({username});
 
