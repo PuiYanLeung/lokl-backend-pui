@@ -1,7 +1,7 @@
 const Post = require("../models/post");
 
 // Adds a post - date is also added as Date.now();
-exports.new = async (creator, content) => await new Post({creator, content}).save();
+exports.new = async (city, author, content) => await new Post({city, author, content}).save();
 
 // Returns an array of posts from user or city depending on whether "user" or "city" is passed in <query>
 exports.list = async (query, variable) => await Post.find({[query]: variable});

@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
 const Post = mongoose.model("Post", {
-    date: {type: Date, default: Date.now},
-    creator: {type: String, required: true},
+    city: {type: String, required: true},
+    author: {type: String, required: true},
     content: {type: String, required: true},
+    date: {type: Date, default: Date.now},
 });
 
 module.exports = Post;
