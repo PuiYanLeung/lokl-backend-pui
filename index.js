@@ -12,7 +12,7 @@ const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin : process.env.REACT_DOMAIN}));
 
 passport.use('register', registerStrategy);
 passport.use('login', loginStrategy);
