@@ -34,6 +34,17 @@ router.post("/register", passport.authenticate("register", session), register);
 router.get("/profile", passport.authenticate("jwt", session), profile);
 router.post("/login", login);
 
+//Edit User after registration
+router.put("/editreg", passport.authenticate("jwt", session), async (req, res) => {
+    token = req.query.secret_token;
+    try {
+        await User.editreg(req.body._id, req.body.email, req.body.city);
+        res.status(200).json({ response: "User updated" });
+    } catch (err) {
+        res.status(404).json({ error: "User not found. No user edited!" });
+    }
+});
+
 //Edit User
 router.put("/", passport.authenticate("jwt", session), async (req, res) => {
     token = req.query.secret_token;
@@ -62,21 +73,6 @@ router.delete("/", passport.authenticate("jwt", session), async (req, res) => {
     }
 });
 
-/*
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
-
-router.post("/", async (req, res) => {
-    if (req.body.password !== req.body.passwordVerify) {
-        return res.status(400).json({"response": "Entered passwords are not the same"});
-    }
-
-    const salt = await bcrypt.genSalt(saltRounds);
-    const pwdHash = await bcrypt.hash(req.body.password, salt);
-    await User.new(req.body.username, req.body.email, pwdHash);
-    res.status(201).json({"response": "User added"});
-});
-*/
 
 
 module.exports = router;
