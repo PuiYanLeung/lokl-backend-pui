@@ -21,7 +21,8 @@ const login = async (req, res, next) => {
             } else if (!user) {
                 res.status(401).json({ msg: "User not found" });
             } else {
-                const fn = async (error) => error? next(error) : res.status(200).json({user: { _id: user._id, name: user.username}, token: jwt.sign( { user: {id: user._id, name: user.username, },},process.env.SECRET_KEY), });
+                const token = jwt.sign( { user: {id: user._id, name: user.username } }, process.env.SECRET_KEY);
+                const fn = async (error) => error? next(error) : res.status(200).json({_id : user._id, username : user.username, city : user.city , email : user.email, about : user.about, token });
                 req.login(user, session, fn);
             }
         } catch (error) {
@@ -36,10 +37,10 @@ router.post("/login", login);
 
 //Edit User after registration
 router.put("/editreg", passport.authenticate("jwt", session), async (req, res) => {
-    token = req.query.secret_token;
     try {
         await User.editreg(req.body._id, req.body.email, req.body.city);
         res.status(200).json({ response: "User updated" });
+        
     } catch (err) {
         res.status(404).json({ error: "User not found. No user edited!" });
     }
@@ -47,7 +48,6 @@ router.put("/editreg", passport.authenticate("jwt", session), async (req, res) =
 
 //Edit User
 router.put("/", passport.authenticate("jwt", session), async (req, res) => {
-    token = req.query.secret_token;
     try {
         await User.edit(req.body._id, req.body.property, req.body.update);
         res.status(200).json({ response: "User updated" });
@@ -58,13 +58,11 @@ router.put("/", passport.authenticate("jwt", session), async (req, res) => {
 
 //Find User
 router.get("/", passport.authenticate("jwt", session), async (req, res) =>{
-    token = req.query.secret_token;
     res.status(200).json({ response: await User.read(req.query._id) });
 });
 
 //DELETE User
 router.delete("/", passport.authenticate("jwt", session), async (req, res) => {
-    token = req.query.secret_token;
     try {
         await User.delete(req.query._id);
         res.status(200).json({ response: "User deleted" });
@@ -72,7 +70,5 @@ router.delete("/", passport.authenticate("jwt", session), async (req, res) => {
         res.status(404).json({ error: "User not found. No user deleted!" });
     }
 });
-
-
 
 module.exports = router;
