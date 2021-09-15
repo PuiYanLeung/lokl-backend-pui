@@ -10,7 +10,7 @@ const User = require("../models/user");
 
 exports.read = async (_id) => {
     const user = await User.findById(_id);
-    const { pwdHash, ...info } = user._doc;
+    const { pwdHash, ...info } = user;
     return info;
 }
 
