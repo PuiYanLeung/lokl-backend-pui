@@ -28,3 +28,10 @@ exports.edit = async (_id, property, update) => {
     }        
 };
 
+exports.editreg = async (_id, email, city) => {
+    const user = await User.updateOne({_id}, {email, city});
+    if(user.modifiedCount <= 0){
+        throw new Error("No user edited!");
+    }        
+};
+
