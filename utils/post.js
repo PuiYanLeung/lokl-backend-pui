@@ -10,4 +10,10 @@ exports.list = async (query, variable) => await Post.find({[query]: variable});
 exports.edit = async (_id, content) => await Post.updateOne({_id}, {content});
 
 // Deletes a post
-exports.delete = async (_id) => await Post.deleteOne({_id});
+//exports.delete = async (_id) => await Post.deleteOne({_id});
+exports.delete = async (_id) => {
+    const post = await Post.findByIdAndDelete(_id);
+    if(post === null){
+        throw new Error("No user deleted!");
+    }        
+}
